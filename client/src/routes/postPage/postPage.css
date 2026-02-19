@@ -14,17 +14,19 @@
 }
 
 .postImg {
-  /* FIXED: IMAGE */
-  /* flex: 1; */
+  flex: 1;
   background-color: #c8bcaf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .postImg img {
   width: 100%;
   height: 100%;
-  /* FIXED: IMAGE */
-  /* object-fit: cover; */
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .postDetails {

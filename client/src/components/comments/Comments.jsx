@@ -1,48 +1,33 @@
 import React, { useState } from "react";
 import "./comments.css";
-import Image from "../image/Image";
-import EmojiPicker from "emoji-picker-react";
 
-const Comments = () => {
-  const [open, setOpen] = useState(false);
+import { useQuery } from "@tanstack/react-query";
+import apiRequest from "../../utils/apiRequest";
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
+
+const Comments = ({ id }) => {
+  const { isPending, error, data } = useQuery({
+    queryKey: ["comments", id],
+    queryFn: () => apiRequest.get(`/comments/${id}`).then((res) => res.data),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data) return "User not found!";
   return (
     <div className="comments">
       <div className="commentList">
-        <span className="commentCount">5 comments</span>
-        <div className="comment">
-          <Image path="/general/noAvatar.png" />
-          <div className="commentContent">
-            <span className="commentUsername">John</span>
-            <p className="commentText">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-              in!
-            </p>
-            <span className="commentTime">1h</span>
-          </div>
-        </div>
-        <div className="comment">
-          <Image path="/general/noAvatar.png" />
-          <div className="commentContent">
-            <span className="commentUsername">John</span>
-            <p className="commentText">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-              in!
-            </p>
-            <span className="commentTime">1h</span>
-          </div>
-        </div>
+        <span className="commentCount">
+          {data.length === 0 ? "No Comments" : data.length} Comments
+        </span>
+        {data?.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
       </div>
-      <form className="commentForm">
-        <input type="text" placeholder="Add a comment" />
-        <div className="emoji">
-          <div onClick={() => setOpen((prev) => !prev)}>😀</div>
-          {open && (
-            <div className="emojiPicker">
-              <EmojiPicker />
-            </div>
-          )}
-        </div>
-      </form>
+      <CommentForm id={id} />
     </div>
   );
 };
