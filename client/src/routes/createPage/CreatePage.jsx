@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreatePage.css";
 import useAuthStore from "../../utils/authStore";
 import IKImage from "../../components/image/Image";
 import { useNavigate } from "react-router-dom";
 import Editor from "../../components/Editor/Editor";
+import useEditorStore from "../../utils/editorStore";
+import apiRequest from "../../utils/apiRequest";
 
 const CreatePage = () => {
   const { currentUser } = useAuthStore();
@@ -15,6 +17,9 @@ const CreatePage = () => {
     width: 0,
     height: 0,
   });
+
+  const formRef = useRef();
+  const { textOptions, canvasOptions } = useEditorStore();
 
   useEffect(() => {
     if (!currentUser) {
@@ -33,15 +38,37 @@ const CreatePage = () => {
       });
     };
   }, [file]);
+
+  const handleSubmit = async () => {
+    if (isEditing) {
+      setIsEditing(false);
+    } else {
+      const formData = new FormData(formRef.current);
+      formData.append("media", file);
+      formData.append("textOptions", JSON.stringify(textOptions));
+      formData.append("canvasOptions", JSON.stringify(canvasOptions));
+      try {
+        const res = await apiRequest.post("/pins", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        navigate(`/pin/${res.data._id}`);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <div className="createPage">
       <div className="createTop">
         <h1>{isEditing ? "Design your Pin" : "Create Pin"}</h1>
-        <button>{isEditing ? "Done" : "Publish"}</button>
+        <button onClick={handleSubmit}>{isEditing ? "Done" : "Publish"}</button>
       </div>
 
       {isEditing ? (
-        <Editor previewImg={previewImg}/>
+        <Editor previewImg={previewImg} />
       ) : (
         <>
           <div className="createBottom">
@@ -73,7 +100,7 @@ const CreatePage = () => {
                 />
               </>
             )}
-            <form className="createForm">
+            <form className="createForm" ref={formRef}>
               <div className="createFormItem">
                 <label htmlFor="title">Tile</label>
                 <input

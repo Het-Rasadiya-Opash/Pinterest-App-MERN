@@ -9,6 +9,7 @@ import boardRouter from "./routes/board.route.js";
 import connectDB from "./utils/connectDB.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 
 app.use(express.json());
 app.use(cookieParser());
@@ -19,6 +20,7 @@ app.use(
   }),
 );
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 app.use("/users", userRouter);
 app.use("/pins", pinRouter);
