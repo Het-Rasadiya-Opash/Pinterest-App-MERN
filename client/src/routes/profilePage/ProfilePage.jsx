@@ -10,7 +10,7 @@ import Boards from "../../components/boards/Boards";
 import FollowButton from "./FollowButton";
 
 const ProfilePage = () => {
-  const [type, setTyped] = useState("");
+  const [type, setTyped] = useState("created");
   const { username } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: ["profile", username],
@@ -55,11 +55,8 @@ const ProfilePage = () => {
           Saved
         </span>
       </div>
-      {type === "created" ? (
-        <Gallery userId={data._id} />
-      ) : (
-        <Boards userId={data._id} />
-      )}
+      {type === "created" && <Gallery userId={data._id} />}
+      {type === "saved" && <Gallery saved={true} userId={data._id} />}
     </div>
   );
 };

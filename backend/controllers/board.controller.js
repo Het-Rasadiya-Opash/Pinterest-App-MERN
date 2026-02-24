@@ -17,3 +17,5 @@ export const getUserBoards = async (req, res) => {
   );
   res.status(200).json(boardsWithPinDetails);
 };
+
+

@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./leftBar.css";
 import Image from "../image/Image";
 
@@ -7,7 +7,7 @@ const LeftBar = () => {
     <div className="leftBar">
       <div className="menuIcons">
         <Link to="/" className="menuIcon">
-          <Image path="/general/logo.png" alt="" className="logo"/>
+          <Image path="/general/logo.png" alt="" className="logo" />
         </Link>
         <Link to="/" className="menuIcon">
           <Image path="/general/home.svg" alt="" />
@@ -15,16 +15,7 @@ const LeftBar = () => {
         <Link to="/create" className="menuIcon">
           <Image path="/general/create.svg" alt="" />
         </Link>
-        <Link to="/" className="menuIcon">
-          <Image path="/general/updates.svg" alt="" />
-        </Link>
-        <Link to="/" className="menuIcon">
-          <Image path="/general/messages.svg" alt="" />
-        </Link>
       </div>
-      <Link to="/" className="menuIcon">
-        <Image path="/general/settings.svg" alt="" />
-      </Link>
     </div>
   );
 };

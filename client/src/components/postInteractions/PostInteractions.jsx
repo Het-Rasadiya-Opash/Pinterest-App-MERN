@@ -17,6 +17,9 @@ const PostInteractions = ({ postId }) => {
       queryClient.invalidateQueries({
         queryKey: ["postInteractionCheck", postId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["pins"],
+      });
     },
   });
 

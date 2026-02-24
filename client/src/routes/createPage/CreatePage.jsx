@@ -129,7 +129,7 @@ const CreatePage = () => {
                   id="link"
                 />
               </div>
-              <div className="createFormItem">
+              {/* <div className="createFormItem">
                 <label htmlFor="board">Board</label>
                 <select name="board" id="board">
                   <option>Choose a board</option>
@@ -137,7 +137,7 @@ const CreatePage = () => {
                   <option value="2">Board 2</option>
                   <option value="3">Board 3</option>
                 </select>
-              </div>
+              </div> */}
               <div className="createFormItem">
                 <label htmlFor="tags">Tagged topics</label>
                 <input
