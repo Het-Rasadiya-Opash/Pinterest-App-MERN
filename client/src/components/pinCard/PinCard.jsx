@@ -19,6 +19,18 @@ const PinCard = ({ pin }) => {
         />
         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
       </div>
+
+      <button className="hidden group-hover:block absolute top-4 right-4 bg-red-600 text-white rounded-3xl px-4 py-3 font-medium cursor-pointer transition-colors hover:bg-red-700 z-10">
+        Save
+      </button>
+      <div className="hidden group-hover:flex absolute bottom-4 right-4 items-center gap-2 z-10">
+        <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-gray-100">
+          <Image path="/general/share.svg" alt="" className="w-5 h-5" />
+        </button>
+        <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-gray-100">
+          <Image path="/general/more.svg" alt="" className="w-5 h-5" />
+        </button>
+      </div>
     </Link>
   );
 };
