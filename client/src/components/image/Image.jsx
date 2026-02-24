@@ -1,10 +1,14 @@
 import { IKImage } from "imagekitio-react";
 
-const Image = ({ path, alt, className, w, h }) => {
+const Image = ({ path, src, alt, className, w, h }) => {
+  if (!path && !src) return null;
+  if (path === "" || src === "") return null;
+  
   return (
     <IKImage
       urlEndpoint={import.meta.env.VITE_URL_IK_ENDPOINT}
-      path={path}
+      path={path || null}
+      src={src || null}
       transformation={[
         {
           height: h,

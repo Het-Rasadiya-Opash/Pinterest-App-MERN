@@ -49,8 +49,8 @@ const PostInteractions = ({ postId }) => {
           />
         </svg>
         {data.likeCount}
-        <Image path="/general/share.svg" alt="" className="cursor-pointer transition-transform hover:scale-110" />
-        <Image path="/general/more.svg" alt="" className="cursor-pointer transition-transform hover:scale-110" />
+        <Image path="/general/share.svg" alt="h" className="cursor-pointer transition-transform hover:scale-110" />
+        <Image path="/general/more.svg" alt="h" className="cursor-pointer transition-transform hover:scale-110" />
       </div>
       <button
         disabled={mutation.isPending}
