@@ -75,8 +75,9 @@ const CreatePage = () => {
 
 
   const { data, isPending, error } = useQuery({
-    queryKey: ["formBoards"],
-    queryFn: () => apiRequest.get(`/boards`).then((res) => res.data),
+    queryKey: ["formBoards", currentUser?._id],
+    queryFn: () => apiRequest.get(`/boards/${currentUser._id}`).then((res) => res.data),
+    enabled: !!currentUser?._id,
   });
 
   const handleNewBoard = () => {
