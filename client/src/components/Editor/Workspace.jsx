@@ -67,7 +67,7 @@ const Workspace = ({ previewImg }) => {
         onMouseLeave={handleMouseLeave}
         ref={containerRef}
       >
-        <img src={previewImg.url} alt="" />
+        <img src={previewImg.url} alt="Preview image" />
         {textOptions.text && (
           <div
             className="text"
@@ -93,7 +93,7 @@ const Workspace = ({ previewImg }) => {
               className="deleteTextButton"
               onClick={() => setTextOptions({ ...textOptions, text: "" })}
             >
-              <Image path="/general/delete.svg" alt="" />
+              <Image path="/general/delete.svg" alt="Delete text" />
             </div>
           </div>
         )}

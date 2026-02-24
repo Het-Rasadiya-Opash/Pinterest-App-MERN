@@ -96,16 +96,16 @@ const CreatePage = () => {
         <div className="createBottom">
           {previewImg.url ? (
             <div className="preview">
-              <img src={previewImg.url} alt="" />
+              <img src={previewImg.url} alt="Pin preview" />
               <div className="editIcon" onClick={() => setIsEditing(true)}>
-                <IKImage path="/general/edit.svg" alt="" />
+                <IKImage path="/general/edit.svg" alt="Edit pin" />
               </div>
             </div>
           ) : (
             <>
               <label htmlFor="file" className="upload">
                 <div className="uploadTitle">
-                  <IKImage path="/general/upload.svg" alt="" />
+                  <IKImage path="/general/upload.svg" alt="Upload icon" />
                   <span>Choose a file</span>
                 </div>
                 <div className="uploadInfo">

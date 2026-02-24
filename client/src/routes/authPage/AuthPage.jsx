@@ -34,7 +34,7 @@ const AuthPage = () => {
   return (
     <div className="w-screen h-screen flex items-center justify-center p-4">
       <div className="flex flex-col items-center justify-center gap-8 p-8 rounded-[32px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] w-full max-w-[450px] max-sm:p-6 max-sm:gap-6">
-        <Image path="/general/logo.png" w={36} h={36} alt="" />
+        <Image path="/general/h.png" w={36} h={36} alt="logo" />
         <h1 className="font-normal text-[28px] max-sm:text-2xl">{isRegister ? "Create an Account" : "Login to your account"}</h1>
         {isRegister ? (
           <form key="register" onSubmit={handleSubmit} className="w-full flex flex-col gap-4">

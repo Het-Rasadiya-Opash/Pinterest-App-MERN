@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import LeftBar from "../../components/leftBar/leftBar";
-import TopBar from "../../components/topBar/topBar";
+import TopBar from "../../components/topBar/TopBar";
 
 const MainLayout = () => {
   return (

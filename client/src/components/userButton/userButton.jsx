@@ -33,9 +33,9 @@ const UserButton = () => {
 
   return currentUser ? (
     <div className="flex items-center gap-4 relative max-sm:hidden" ref={dropdownRef}>
-      <Image path={currentUser.img || "/general/noAvatar.png"} alt="" className="w-9 h-9 rounded-full object-cover" />
+      <Image path={currentUser.img || "/general/noAvatar.png"} alt="User avatar" className="w-9 h-9 rounded-full object-cover" />
       <div onClick={() => setOpen((prev) => !prev)}>
-        <Image path="/general/arrow.svg" alt="" className="cursor-pointer w-4 h-4" />
+        <Image path="/general/arrow.svg" alt="Dropdown arrow" className="cursor-pointer w-4 h-4" />
       </div>
       {open && (
         <div className="absolute right-0 top-[120%] p-4 rounded-lg bg-white z-999 flex flex-col text-sm shadow-md">

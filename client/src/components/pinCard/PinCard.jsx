@@ -4,6 +4,8 @@ import Image from "../image/image";
 const PinCard = ({ pin }) => {
   const optimizedHeight = (372 * pin.height) / pin.width;
 
+  if (!pin.media) return null;
+
   return (
     <Link
       to={`/pin/${pin._id}`}
@@ -25,10 +27,10 @@ const PinCard = ({ pin }) => {
       </button>
       <div className="hidden group-hover:flex absolute bottom-4 right-4 items-center gap-2 z-10">
         <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-gray-100">
-          <Image path="/general/share.svg" alt="" className="w-5 h-5" />
+          <Image path="/general/share.svg" alt="share" className="w-5 h-5" />
         </button>
         <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-gray-100">
-          <Image path="/general/more.svg" alt="" className="w-5 h-5" />
+          <Image path="/general/more.svg" alt="more" className="w-5 h-5" />
         </button>
       </div>
     </Link>

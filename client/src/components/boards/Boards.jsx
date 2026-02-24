@@ -22,7 +22,7 @@ const Boards = ({ userId }) => {
           className="mb-8 cursor-pointer transition-transform hover:-translate-y-1 max-[798px]:mb-6"
           key={board._id}
         >
-          <Image path={board.firstPin?.media || "/pins/pin1.jpeg"} alt="" className="w-full object-cover rounded-2xl" />
+          <Image path={board.firstPin?.media || "/pins/pin1.jpeg"} alt={board.title || "Board cover"} className="w-full object-cover rounded-2xl" />
           <div className="flex flex-col gap-2 pt-2">
             <h1 className="font-medium text-base">{board.title}</h1>
             <span className="text-gray-500 text-sm">

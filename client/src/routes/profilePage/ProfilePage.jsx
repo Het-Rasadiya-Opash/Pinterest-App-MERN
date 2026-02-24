@@ -31,7 +31,7 @@ const ProfilePage = () => {
         w={120}
         h={120}
         path={data.img || "/general/noAvatar.png"}
-        alt=""
+        alt="Profile picture"
       />
 
       <h1 className="text-4xl font-medium">{data.displayName}</h1>
@@ -42,7 +42,7 @@ const ProfilePage = () => {
       </div>
 
       <div className="flex items-center gap-8 flex-wrap justify-center">
-        <Image path="/general/share.svg" alt="" />
+        <Image path="/general/share.svg" alt="Share profile" />
 
         <div className="flex gap-4">
           <button className="border-none px-4 py-4 rounded-full font-bold cursor-pointer">
@@ -55,7 +55,7 @@ const ProfilePage = () => {
           />
         </div>
 
-        <Image path="/general/more.svg" alt="" />
+        <Image path="/general/more.svg" alt="More options" />
       </div>
 
       <div className="flex gap-6 mt-8 mb-4 font-medium">
