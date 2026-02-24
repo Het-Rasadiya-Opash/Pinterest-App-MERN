@@ -27,7 +27,7 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col items-center gap-4 px-4">
       <Image
-        className="rounded-full object-cover w-[120px] h-[120px]"
+        className="rounded-full object-cover w-30 h-30"
         w={120}
         h={120}
         path={data.img || "/general/noAvatar.png"}
