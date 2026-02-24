@@ -5,13 +5,14 @@ import Comment from "../models/comment.model.js";
 import bcrypt from "bcryptjs";
 import connectDB from "./connectDB.js";
 
+
 connectDB();
 
 const seedDB = async () => {
-  await User.deleteMany({});
-  await Pin.deleteMany({});
-  await Board.deleteMany({});
-  await Comment.deleteMany({});
+  // await User.deleteMany({});
+  // await Pin.deleteMany({});
+  // await Board.deleteMany({});
+  // await Comment.deleteMany({});
 
   const users = [];
   for (let i = 1; i <= 10; i++) {
