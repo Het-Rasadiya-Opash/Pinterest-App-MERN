@@ -9,10 +9,7 @@ import connectDB from "./connectDB.js";
 connectDB();
 
 const seedDB = async () => {
-  // await User.deleteMany({});
-  // await Pin.deleteMany({});
-  // await Board.deleteMany({});
-  // await Comment.deleteMany({});
+
 
   const users = [];
   for (let i = 1; i <= 10; i++) {
@@ -72,11 +69,11 @@ const seedDB = async () => {
     }
   }
 
-  console.log("Database seeded successfully!");
+
   process.exit(0);
 };
 
 seedDB().catch((error) => {
-  console.error("Error seeding database:", error);
+
   process.exit(1);
 });

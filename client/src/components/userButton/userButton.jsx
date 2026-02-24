@@ -27,7 +27,7 @@ const UserButton = () => {
       removeCurrentUser();
       navigate("/auth");
     } catch (err) {
-      console.log(err);
+
     }
   };
 

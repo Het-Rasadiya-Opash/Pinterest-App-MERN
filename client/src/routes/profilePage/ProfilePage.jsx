@@ -58,7 +58,6 @@ const ProfilePage = () => {
         <Image path="/general/more.svg" alt="" />
       </div>
 
-      {/* TABS */}
       <div className="flex gap-6 mt-8 mb-4 font-medium">
         <span
           onClick={() => setType("created")}
@@ -90,7 +89,6 @@ const ProfilePage = () => {
         </span>
       </div>
 
-      {/* CONTENT */}
       {type === "created" && <Gallery userId={data._id} />}
       {type === "saved" && isOwnProfile && <Gallery saved />}
       {type === "boards" && <Boards userId={data._id} />}

@@ -9,7 +9,6 @@ import apiRequest from "../../utils/apiRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BoardForm from "./BoardForm";
 
-// FIXED: CHANGE DIRECT REQUEST TO MUTATION
 const addPost = async (post) => {
   const res = await apiRequest.post("/pins", post);
   return res.data;
@@ -28,7 +27,6 @@ const CreatePage = () => {
     height: 0,
   });
   const [isEditing, setIsEditing] = useState(false);
-  // FIXED: ADD NEW BOARD
   const [newBoard, setNewBoard] = useState("");
   const [isNewBoardOpen, setIsNewBoardOpen] = useState(false);
 
@@ -53,7 +51,6 @@ const CreatePage = () => {
   }, [file]);
 
 
-  // FIXED: CHANGE DIRECT REQUEST TO MUTATION
   const mutation = useMutation({
     mutationFn: addPost,
     onSuccess: (data) => {
@@ -70,32 +67,18 @@ const CreatePage = () => {
       formData.append("media", file);
       formData.append("textOptions", JSON.stringify(textOptions));
       formData.append("canvasOptions", JSON.stringify(canvasOptions));
-      // FIXED: ADD NEW BOARD
       formData.append("newBoard", newBoard);
 
-      // FIXED: CHANGE DIRECT REQUEST TO MUTATION
-      // try {
-      //   const res = await apiRequest.post("/pins", formData, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   });
-      //   navigate(`/pin/${res.data._id}`)
-      // } catch (err) {
-      //   console.log(err);
-      // }
       mutation.mutate(formData);
     }
   };
 
 
-  // FIXED: FETCH EXISTING BOARDS
   const { data, isPending, error } = useQuery({
     queryKey: ["formBoards"],
     queryFn: () => apiRequest.get(`/boards`).then((res) => res.data),
   });
 
-  // FIXED: ADD NEW BOARD
   const handleNewBoard = () => {
     setIsNewBoardOpen((prev) => !prev);
   };
@@ -166,16 +149,6 @@ const CreatePage = () => {
                 id="link"
               />
             </div>
-            {/* <div className="createFormItem">
-              <label htmlFor="board">Board</label>
-              <select name="board" id="board">
-                <option value="">Choose a board</option>
-                <option value="1">Board 1</option>
-                <option value="2">Board 2</option>
-                <option value="3">Board 3</option>
-              </select>
-            </div> */}
-            {/* FIXED: SELECT OR ADD BOARD */}
             {(!isPending || !error) && (
               <div className="createFormItem">
                 <label htmlFor="board">Board</label>

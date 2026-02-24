@@ -67,7 +67,7 @@ export const getPin = async (req, res) => {
     "username img displayName"
   );
 
-  console.log(pin);
+
   res.status(200).json(pin);
 };
 
@@ -126,19 +126,7 @@ export const createPin = async (req, res) => {
     (parsedTextOptions.top * height) / parsedCanvasOptions.height
   );
 
-  // const transformationString = `w-${width},h-${height}${
-  //   originalAspectRatio > clientAspectRatio ? ",cm-pad_resize" : ""
-  // },bg-${parsedCanvasOptions.backgroundColor.substring(1)}${
-  //   parsedTextOptions.text
-  //     ? `,l-text,i-${parsedTextOptions.text},fs-${
-  //         parsedTextOptions.fontSize * 2.1
-  //       },lx-${textLeftPosition},ly-${textTopPosition},co-${parsedTextOptions.color.substring(
-  //         1
-  //       )},l-end`
-  //     : ""
-  // }`;
 
-  // FIXED TRANSFORMATION STRING
 
   let croppingStrategy = "";
 
@@ -177,7 +165,7 @@ export const createPin = async (req, res) => {
       },
     })
     .then(async (response) => {
-      // FIXED: ADD NEW BOARD
+
       let newBoardId;
 
       if (newBoard) {
@@ -202,7 +190,7 @@ export const createPin = async (req, res) => {
       return res.status(201).json(newPin);
     })
     .catch((err) => {
-      console.log(err);
+
       return res.status(500).json(err);
     });
 };

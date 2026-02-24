@@ -28,7 +28,6 @@ const useEditorStore = create((set) => ({
       },
     }),
   setCanvasOptions: (newOption) => set({ canvasOptions: newOption }),
-  // FIXED: ADD RESET FUNCTION
   resetStore: () =>
     set({
       selectedLayer: "canvas",
