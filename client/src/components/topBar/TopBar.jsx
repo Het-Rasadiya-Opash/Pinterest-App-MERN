@@ -10,10 +10,10 @@ const TopBar = () => {
     navigate(`/search?search=${e.target[0].value}`);
   };
   return (
-    <div className="my-4 flex items-center gap-4 max-md:my-3 max-md:gap-3 max-sm:gap-2">
-      <form onSubmit={handleSubmit} className="flex-1 bg-gray-100 rounded-2xl px-4 py-4 flex items-center gap-4 max-md:px-3 max-md:py-3 max-sm:px-2.5 max-sm:py-2.5">
-        <Image path="/general/search.svg" alt="Search icon" />
-        <input type="text" placeholder="Search" className="flex-1 bg-transparent border-none outline-none text-lg max-md:text-base max-sm:text-sm" />
+    <div className="my-4 flex items-center gap-4 max-md:my-3 max-md:gap-3 max-sm:my-2 max-sm:gap-2 max-sm:mx-2">
+      <form onSubmit={handleSubmit} className="flex-1 bg-gray-100 rounded-2xl px-4 py-4 flex items-center gap-4 max-md:px-3 max-md:py-3 max-sm:px-3 max-sm:py-3">
+        <Image path="/general/search.svg" alt="Search icon" className="w-5 h-5 max-sm:w-4 max-sm:h-4" />
+        <input type="text" placeholder="Search" className="flex-1 bg-transparent border-none outline-none text-lg max-md:text-base max-sm:text-sm placeholder:text-gray-500" />
       </form>
       <UserButton />
     </div>
