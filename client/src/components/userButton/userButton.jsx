@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "../image/image";
 import apiRequest from "../../utils/apiRequest";
 import { Link, useNavigate } from "react-router";
@@ -8,6 +8,18 @@ const UserButton = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { currentUser, removeCurrentUser } = useAuthStore();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -20,7 +32,7 @@ const UserButton = () => {
   };
 
   return currentUser ? (
-    <div className="flex items-center gap-4 relative max-sm:hidden">
+    <div className="flex items-center gap-4 relative max-sm:hidden" ref={dropdownRef}>
       <Image path={currentUser.img || "/general/noAvatar.png"} alt="" className="w-9 h-9 rounded-full object-cover" />
       <div onClick={() => setOpen((prev) => !prev)}>
         <Image path="/general/arrow.svg" alt="" className="cursor-pointer w-4 h-4" />
@@ -30,7 +42,6 @@ const UserButton = () => {
           <Link to={`/${currentUser.username}`} className="cursor-pointer p-2 rounded-lg hover:bg-gray-100 hover:text-gray-500">
             Profile
           </Link>
-          <div className="cursor-pointer p-2 rounded-lg hover:bg-gray-100 hover:text-gray-500">Setting</div>
           <div className="cursor-pointer p-2 rounded-lg hover:bg-gray-100 hover:text-gray-500" onClick={handleLogout}>
             Logout
           </div>

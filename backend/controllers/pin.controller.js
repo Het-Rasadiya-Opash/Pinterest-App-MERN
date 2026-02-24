@@ -12,32 +12,52 @@ export const getPins = async (req, res) => {
   const search = req.query.search;
   const userId = req.query.userId;
   const boardId = req.query.boardId;
+  const saved = req.query.saved;
+
   const LIMIT = 21;
 
-  const pins = await Pin.find(
-    search
-      ? {
-          $or: [
-            { title: { $regex: search, $options: "i" } },
-            { tags: { $in: [search] } },
-          ],
-        }
-      : userId
-      ? { user: userId }
-      : boardId
-      ? { board: boardId }
-      : {}
-  )
+  let query = {};
+
+  if (search) {
+    query = {
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { tags: { $regex: search, $options: "i" } }
+      ],
+    };
+  } 
+  else if (saved === "true") {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: "Authentication required for saved pins" });
+    }
+    
+    try {
+      const payload = jwt.verify(token, process.env.JWT_SECRET);
+      const savedPins = await Save.find({ user: payload.userId }).select("pin");
+      const pinIds = savedPins.map((s) => s.pin);
+      query = { _id: { $in: pinIds } };
+    } catch (err) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+  } 
+  else if (userId) {
+    query = { user: userId };
+  } 
+  else if (boardId) {
+    query = { board: boardId };
+  }
+
+  const pins = await Pin.find(query)
     .limit(LIMIT)
     .skip(pageNumber * LIMIT);
 
   const hasNextPage = pins.length === LIMIT;
 
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-
-  res
-    .status(200)
-    .json({ pins, nextCursor: hasNextPage ? pageNumber + 1 : null });
+  res.status(200).json({
+    pins,
+    nextCursor: hasNextPage ? pageNumber + 1 : null,
+  });
 };
 
 export const getPin = async (req, res) => {
