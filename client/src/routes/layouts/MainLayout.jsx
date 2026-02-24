@@ -4,9 +4,9 @@ import TopBar from "../../components/topBar/TopBar";
 
 const MainLayout = () => {
   return (
-    <div className="w-full flex gap-4 max-md:gap-2">
+    <div className="w-full flex gap-4 max-md:gap-2 max-sm:pb-20">
       <LeftBar />
-      <div className="flex-1 mr-4 max-md:mr-2">
+      <div className="flex-1 mr-4 max-md:mr-2 max-sm:mr-0">
         <TopBar />
         <Outlet/>
       </div>
