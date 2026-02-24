@@ -8,11 +8,12 @@ import Imagekit from "imagekit";
 import jwt from "jsonwebtoken";
 
 export const getPins = async (req, res) => {
-  const pageNuber = Number(req.query.cursor) || 0;
-  const search = Number(req.query.search);
+  const pageNumber = Number(req.query.cursor) || 0;
+  const search = req.query.search;
   const userId = req.query.userId;
   const boardId = req.query.boardId;
   const LIMIT = 21;
+
   const pins = await Pin.find(
     search
       ? {
@@ -22,29 +23,31 @@ export const getPins = async (req, res) => {
           ],
         }
       : userId
-        ? { user: userId }
-        : boardId
-          ? { board: boardId }
-          : {},
+      ? { user: userId }
+      : boardId
+      ? { board: boardId }
+      : {}
   )
     .limit(LIMIT)
-    .skip(pageNuber * LIMIT);
+    .skip(pageNumber * LIMIT);
 
   const hasNextPage = pins.length === LIMIT;
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   res
     .status(200)
-    .json({ pins, nextCursor: hasNextPage ? hasNextPage + 1 : null });
+    .json({ pins, nextCursor: hasNextPage ? pageNumber + 1 : null });
 };
 
 export const getPin = async (req, res) => {
   const { id } = req.params;
   const pin = await Pin.findById(id).populate(
     "user",
-    "username img displayName",
+    "username img displayName"
   );
 
+  console.log(pin);
   res.status(200).json(pin);
 };
 
@@ -84,14 +87,13 @@ export const createPin = async (req, res) => {
       parsedCanvasOptions.size.split(":")[0] /
       parsedCanvasOptions.size.split(":")[1];
   } else {
-    clientAspectRatio =
-      parsedCanvasOptions.orientation === originalOrientation
-        ? originalAspectRatio
-        : 1 / originalAspectRatio;
+    parsedCanvasOptions.orientation === originalOrientation
+      ? (clientAspectRatio = originalOrientation)
+      : (clientAspectRatio = 1 / originalAspectRatio);
   }
 
   width = metadata.width;
-  height = Math.round(metadata.width / clientAspectRatio);
+  height = metadata.width / clientAspectRatio;
 
   const imagekit = new Imagekit({
     publicKey: process.env.IK_PUBLIC_KEY,
@@ -101,8 +103,22 @@ export const createPin = async (req, res) => {
 
   const textLeftPosition = Math.round((parsedTextOptions.left * width) / 375);
   const textTopPosition = Math.round(
-    (parsedTextOptions.top * height) / (parsedCanvasOptions.height || height),
+    (parsedTextOptions.top * height) / parsedCanvasOptions.height
   );
+
+  // const transformationString = `w-${width},h-${height}${
+  //   originalAspectRatio > clientAspectRatio ? ",cm-pad_resize" : ""
+  // },bg-${parsedCanvasOptions.backgroundColor.substring(1)}${
+  //   parsedTextOptions.text
+  //     ? `,l-text,i-${parsedTextOptions.text},fs-${
+  //         parsedTextOptions.fontSize * 2.1
+  //       },lx-${textLeftPosition},ly-${textTopPosition},co-${parsedTextOptions.color.substring(
+  //         1
+  //       )},l-end`
+  //     : ""
+  // }`;
+
+  // FIXED TRANSFORMATION STRING
 
   let croppingStrategy = "";
 
@@ -120,13 +136,13 @@ export const createPin = async (req, res) => {
   }
 
   const transformationString = `w-${width},h-${height}${croppingStrategy},bg-${parsedCanvasOptions.backgroundColor.substring(
-    1,
+    1
   )}${
     parsedTextOptions.text
       ? `,l-text,i-${parsedTextOptions.text},fs-${
           parsedTextOptions.fontSize * 2.1
         },lx-${textLeftPosition},ly-${textTopPosition},co-${parsedTextOptions.color.substring(
-          1,
+          1
         )},l-end`
       : ""
   }`;
@@ -157,9 +173,7 @@ export const createPin = async (req, res) => {
         title,
         description,
         link: link || null,
-        board:
-          newBoardId ||
-          (board && board.match(/^[0-9a-fA-F]{24}$/) ? board : null),
+        board: newBoardId || board || null,
         tags: tags ? tags.split(",").map((tag) => tag.trim()) : [],
         media: response.filePath,
         width: response.width,

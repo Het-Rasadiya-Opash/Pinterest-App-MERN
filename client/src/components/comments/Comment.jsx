@@ -1,16 +1,16 @@
-import React from "react";
-import Image from "../image/Image";
-import "./comments.css";
-import { format } from "timeago.js";
+import Image from "../image/image";
+import {format} from "timeago.js" 
 
 const Comment = ({ comment }) => {
   return (
-    <div className="comment">
-      <Image path={comment.user.img || "/general/noAvatar.png"} />
-      <div className="commentContent">
-        <span className="commentUsername">{comment.user.displayName}</span>
-        <p className="commentText">{comment.description}</p>
-        <span className="commentTime">{format(comment.createdAt)}</span>
+    <div className="flex gap-4 max-md:gap-3">
+      <Image path={comment.user.img || "/general/noAvatar.png"} alt="" className="w-8 h-8 rounded-full object-cover max-md:w-7 max-md:h-7" />
+      <div className="flex flex-col gap-1 flex-1">
+        <span className="font-medium text-sm">{comment.user.displayName}</span>
+        <p className="text-sm break-words">
+          {comment.description}
+        </p>
+        <span className="text-xs text-gray-400">{format(comment.createdAt)}</span>
       </div>
     </div>
   );

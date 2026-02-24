@@ -1,15 +1,14 @@
-import React from "react";
+import { Outlet } from "react-router";
 import LeftBar from "../../components/leftBar/leftBar";
-import TopBar from "../../components/topBar/TopBar";
-import "./mainLayout.css";
-import { Outlet } from "react-router-dom";
+import TopBar from "../../components/topBar/topBar";
+
 const MainLayout = () => {
   return (
-    <div className="app">
+    <div className="w-full flex gap-4 max-md:gap-2">
       <LeftBar />
-      <div className="content">
+      <div className="flex-1 mr-4 max-md:mr-2">
         <TopBar />
-        <Outlet />
+        <Outlet/>
       </div>
     </div>
   );

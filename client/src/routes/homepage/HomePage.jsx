@@ -1,10 +1,10 @@
-import React from 'react'
-import Gallery from '../../components/gallery/Gallery'
+import './homepage.css'
+import Gallery from "../../components/gallery/gallery";
 
-const HomePage = () => {
+const Homepage = () => {
   return (
     <Gallery/>
   )
 }
 
-export default HomePage
+export default Homepage

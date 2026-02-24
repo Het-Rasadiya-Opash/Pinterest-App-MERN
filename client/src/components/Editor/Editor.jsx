@@ -1,8 +1,7 @@
-import React from "react";
-import "./Editor.css";
+import "./editor.css";
 import Layers from "./Layers";
-import Workspace from "./Workspace";
 import Options from "./Options";
+import Workspace from "./Workspace";
 
 const Editor = ({ previewImg }) => {
   return (

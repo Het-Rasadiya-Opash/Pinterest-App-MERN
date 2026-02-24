@@ -1,7 +1,8 @@
 import { IKImage } from "imagekitio-react";
-import { useState } from "react";
 
 const Image = ({ path, src, alt, className, w, h }) => {
+  if (!path && !src) return null;
+  
   return (
     <IKImage
       urlEndpoint={import.meta.env.VITE_URL_IK_ENDPOINT}

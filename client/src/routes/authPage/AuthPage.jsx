@@ -1,110 +1,122 @@
-import React, { useState } from "react";
-import "./authPage.css";
-import Image from "../../components/image/Image";
+import Image from "../../components/image/image";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import apiRequest from "../../utils/apiRequest";
-import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../utils/authStore";
 
 const AuthPage = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
+
   const { setCurrentUser } = useAuthStore();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+
     const data = Object.fromEntries(formData);
+
     try {
       const res = await apiRequest.post(
         `/users/auth/${isRegister ? "register" : "login"}`,
-        data,
+        data
       );
+
       setCurrentUser(res.data);
+
       navigate("/");
-    } catch (error) {
-      setError(error.response.data.message);
+    } catch (err) {
+      setError(err.response.data.message);
     }
   };
   return (
-    <div className="authPage">
-      <div className="authContainer">
-        <Image path="/general/logo.png" />
-        <h1>{isRegister ? "Create an Account" : "Login to your account"}</h1>
+    <div className="w-screen h-screen flex items-center justify-center p-4">
+      <div className="flex flex-col items-center justify-center gap-8 p-8 rounded-[32px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] w-full max-w-[450px] max-sm:p-6 max-sm:gap-6">
+        <Image path="/general/logo.png" w={36} h={36} alt="" />
+        <h1 className="font-normal text-[28px] max-sm:text-2xl">{isRegister ? "Create an Account" : "Login to your account"}</h1>
         {isRegister ? (
-          <form key="registerForm" onSubmit={handleSubmit}>
-            <div className="formGroup">
-              <label htmlFor="username">Username</label>
+          <form key="register" onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="username" className="text-sm font-medium">Username</label>
               <input
-                type="text"
-                id="username"
+                type="username"
+                placeholder="Username"
+                required
                 name="username"
-                placeholder="username"
-                required
+                id="username"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <div className="formGroup">
-              <label htmlFor="displayName">Name</label>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="displayName" className="text-sm font-medium">Name</label>
               <input
-                type="text"
-                id="displayName"
-                name="displayName"
-                placeholder="displayName"
+                type="displayName"
+                placeholder="Name"
                 required
+                name="displayName"
+                id="displayName"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <div className="formGroup">
-              <label htmlFor="email">Email</label>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium">Email</label>
               <input
                 type="email"
-                id="email"
-                name="email"
                 placeholder="Email"
                 required
+                name="email"
+                id="email"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <div className="formGroup">
-              <label htmlFor="password">Password</label>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-medium">Password</label>
               <input
                 type="password"
-                id="password"
-                name="password"
-                placeholder="password"
+                placeholder="Password"
                 required
+                name="password"
+                id="password"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <button type="submit">Register</button>
-            <p onClick={() => setIsRegister(false)}>
+            <button type="submit" className="bg-red-600 p-4 border-none rounded-full text-white cursor-pointer font-bold text-base transition-colors hover:bg-red-700 max-sm:p-3.5">Register</button>
+            <p onClick={() => setIsRegister(false)} className="text-sm text-center cursor-pointer transition-colors hover:text-red-600">
               Do you have an account? <b>Login</b>
             </p>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="text-red-600 text-sm">{error}</p>}
           </form>
         ) : (
-          <form key="loginForm" onSubmit={handleSubmit}>
-            <div className="formGroup">
-              <label htmlFor="email">Email</label>
+          <form key="loginForm" onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium">Email</label>
               <input
                 type="email"
-                id="email"
-                name="email"
                 placeholder="Email"
                 required
+                name="email"
+                id="email"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <div className="formGroup">
-              <label htmlFor="password">Password</label>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-medium">Password</label>
               <input
                 type="password"
-                id="password"
-                name="password"
-                placeholder="password"
+                placeholder="Password"
                 required
+                name="password"
+                id="password"
+                className="p-4 border-2 border-gray-200 rounded-2xl text-base transition-colors focus:outline-none focus:border-red-600 max-sm:p-3.5"
               />
             </div>
-            <button type="submit">Login</button>
-            <p onClick={() => setIsRegister(true)}>
-              Don't have an account? <b>Register</b>
+            <button type="submit" className="bg-red-600 p-4 border-none rounded-full text-white cursor-pointer font-bold text-base transition-colors hover:bg-red-700 max-sm:p-3.5">Login</button>
+            <p onClick={() => setIsRegister(true)} className="text-sm text-center cursor-pointer transition-colors hover:text-red-600">
+              Don&apos;t have an account? <b>Register</b>
             </p>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="text-red-600 text-sm">{error}</p>}
           </form>
         )}
       </div>
