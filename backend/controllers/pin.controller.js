@@ -112,8 +112,8 @@ export const createPin = async (req, res) => {
       : (clientAspectRatio = 1 / originalAspectRatio);
   }
 
-  width = metadata.width;
-  height = metadata.width / clientAspectRatio;
+  width = metadata.width || 800;
+  height = isNaN(metadata.width / clientAspectRatio) ? 600 : Math.round(metadata.width / clientAspectRatio);
 
   const imagekit = new Imagekit({
     publicKey: process.env.IK_PUBLIC_KEY,
@@ -121,10 +121,13 @@ export const createPin = async (req, res) => {
     urlEndpoint: process.env.IK_URL_ENDPOINT,
   });
 
-  const textLeftPosition = Math.round((parsedTextOptions.left * width) / 375);
-  const textTopPosition = Math.round(
-    (parsedTextOptions.top * height) / parsedCanvasOptions.height
-  );
+  const safeLeft = parsedTextOptions.left || 0;
+  const safeTop = parsedTextOptions.top || 0;
+  const safeCanvasHeight = parsedCanvasOptions.height || height;
+  const safeFontSize = parsedTextOptions.fontSize || 16;
+  
+  const textLeftPosition = Math.round((safeLeft * width) / 375) || 0;
+  const textTopPosition = Math.round((safeTop * height) / safeCanvasHeight) || 0;
 
 
 
@@ -143,15 +146,9 @@ export const createPin = async (req, res) => {
     }
   }
 
-  const transformationString = `w-${width},h-${height}${croppingStrategy},bg-${parsedCanvasOptions.backgroundColor.substring(
-    1
-  )}${
+  const transformationString = `w-${width},h-${height}${croppingStrategy},bg-${parsedCanvasOptions.backgroundColor?.substring(1) || "ffffff"}${
     parsedTextOptions.text
-      ? `,l-text,i-${parsedTextOptions.text},fs-${
-          parsedTextOptions.fontSize * 2.1
-        },lx-${textLeftPosition},ly-${textTopPosition},co-${parsedTextOptions.color.substring(
-          1
-        )},l-end`
+      ? `,l-text,i-${parsedTextOptions.text},fs-${Math.round(safeFontSize * 2.1)},lx-${textLeftPosition},ly-${textTopPosition},co-${parsedTextOptions.color?.substring(1) || "000000"},l-end`
       : ""
   }`;
 

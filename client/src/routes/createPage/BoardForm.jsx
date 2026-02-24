@@ -15,7 +15,7 @@ const BoardForm = ({ setIsNewBoardOpen, setNewBoard }) => {
           className="boardFormClose"
           onClick={() => setIsNewBoardOpen(false)}
         >
-          <Image path="/general/cancel.svg" alt="h" w={20} h={20} />
+          <Image path="/general/cancel.png" alt="h" w={20} h={20} />
         </div>
         <form onSubmit={handleSubmit}>
           <h1>Create a new board</h1>
